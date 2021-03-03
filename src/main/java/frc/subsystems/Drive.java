@@ -17,8 +17,8 @@ public class Drive extends Subsystem {
         VELOCITY
     }
 
-    private RobotOutput robotOutput;
-    private SensorInput sensorInput;
+    private RobotOutput robotOut;
+    private SensorInput sensorIn;
 
     // states
     private DriveState currentState = DriveState.OUTPUT;
@@ -39,15 +39,15 @@ public class Drive extends Subsystem {
     }
 
     private Drive() {
-        this.robotOutput = RobotOutput.getInstance();
-        this.sensorInput = SensorInput.getInstance();
+        this.robotOut = RobotOutput.getInstance();
+        this.sensorIn = SensorInput.getInstance();
 
         this.firstCycle();
     }
 
     private Point getRotatedError(double theta, double desiredX, double desiredY) {
-        double currentX = this.sensorInput.getDriveXPos();
-        double currentY = this.sensorInput.getDriveYPos();
+        double currentX = this.sensorIn.getDriveXPos();
+        double currentY = this.sensorIn.getDriveYPos();
         double rotation = 90 - theta;
 
         Point currentPosition = new Point(currentX, currentY);
@@ -101,10 +101,10 @@ public class Drive extends Subsystem {
     public void driveAtVelocity(double velocity) {
         this.currentState = DriveState.VELOCITY;
         this.setTargetVelocity(velocity);
-        double left = this.leftVelPID.calcPID(this.sensorInput.getDriveSpeedFPS());
-        double right = this.rightVelPID.calcPID(this.sensorInput.getDriveSpeedFPS());
-        this.robotOutput.setDriveLeft(left);
-        this.robotOutput.setDriveRight(right);
+        double left = this.leftVelPID.calcPID(this.sensorIn.getDriveSpeedFPS());
+        double right = this.rightVelPID.calcPID(this.sensorIn.getDriveSpeedFPS());
+        this.robotOut.setDriveLeft(left);
+        this.robotOut.setDriveRight(right);
     }
 
     public void setVelocityOutput(double leftOut, double rightOut) {
@@ -113,15 +113,15 @@ public class Drive extends Subsystem {
         this.leftVelPID.setDesiredValue(leftOut);
         this.rightVelPID.setDesiredValue(rightOut);
 
-        rightOut = this.rightVelPID.calcPID(this.sensorInput.getDriveRightSpeedFPS());
-        leftOut = this.leftVelPID.calcPID(this.sensorInput.getDriveLeftSpeedFPS());
+        rightOut = this.rightVelPID.calcPID(this.sensorIn.getDriveRightSpeedFPS());
+        leftOut = this.leftVelPID.calcPID(this.sensorIn.getDriveLeftSpeedFPS());
 
-        this.robotOutput.setDriveLeft(leftOut);
-        this.robotOutput.setDriveRight(rightOut);
+        this.robotOut.setDriveLeft(leftOut);
+        this.robotOut.setDriveRight(rightOut);
     }
 
     public void setRampRate(double rate) {
-        this.robotOutput.setDriveRampRate(rate);
+        this.robotOut.setDriveRampRate(rate);
     }
 
     @Override
@@ -129,11 +129,11 @@ public class Drive extends Subsystem {
         SmartDashboard.putString("DRIVE_STATE", this.currentState.toString());
 
         if (this.currentState == DriveState.OUTPUT) {
-            this.robotOutput.setDriveLeft(this.leftOut);
-            this.robotOutput.setDriveRight(this.rightOut);
+            this.robotOut.setDriveLeft(this.leftOut);
+            this.robotOut.setDriveRight(this.rightOut);
         } else if (this.currentState == DriveState.VELOCITY) {
-            this.robotOutput.setDriveLeft(this.leftOut);
-            this.robotOutput.setDriveRight(this.rightOut);
+            this.robotOut.setDriveLeft(this.leftOut);
+            this.robotOut.setDriveRight(this.rightOut);
         }
     }
 
@@ -159,7 +159,7 @@ public class Drive extends Subsystem {
 		
 		targetHeading = theta - turningOffset;
 
-		double angle = sensorInput.getGyroAngle();
+		double angle = sensorIn.getGyroAngle();
 
 		this.turnPID.setDesiredValue(targetHeading);
 
@@ -169,9 +169,9 @@ public class Drive extends Subsystem {
 		double yOutput;
 
 		if (Math.abs(yError) > 3.0) {
-			this.robotOutput.setDriveRampRate(0.20);
+			this.robotOut.setDriveRampRate(0.20);
 		} else {
-			this.robotOutput.setDriveRampRate(0);
+			this.robotOut.setDriveRampRate(0);
 		}
 
 		yOutput = this.straightPID.calcPIDError(yError);
@@ -202,11 +202,11 @@ public class Drive extends Subsystem {
 			if (this.straightPID.isDone()) {
 				disable();
 				isDone = true;
-				this.robotOutput.setDriveRampRate(0);
+				this.robotOut.setDriveRampRate(0);
 			}
 		} else if (Math.abs(dist) < eps) {
 			isDone = true;
-			this.robotOutput.setDriveRampRate(0);
+			this.robotOut.setDriveRampRate(0);
 		}
 
 		return isDone;
@@ -214,8 +214,8 @@ public class Drive extends Subsystem {
 
     @Override
     public void disable() {
-        this.robotOutput.setDriveLeft(0.0);
-        this.robotOutput.setDriveRight(0.0);
+        this.robotOut.setDriveLeft(0.0);
+        this.robotOut.setDriveRight(0.0);
     }
     
 }

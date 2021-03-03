@@ -2,6 +2,7 @@ package frc.io;
 
 import com.revrobotics.CANEncoder;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants;
 import frc.robot.Constants.RobotType;
 import frc.util.Navx;
@@ -9,18 +10,31 @@ import frc.util.Navx;
 public class SensorInput {
     private static SensorInput instance;
 
-    private RobotOutput robotOutput;
+    private RobotOutput robotOut;
 
     private boolean firstCycle = true;	
     private double gyroAngle;
 	private double lastGyroAngle;
 
+    // Drive encoders
     private Navx navx;
     private CANEncoder driveL1Encoder;
     private CANEncoder driveL2Encoder;
     private CANEncoder driveR1Encoder;
     private CANEncoder driveR2Encoder;
 
+    // Intake encoders
+    private CANEncoder intakeArmEncoder;
+
+    // Stager sensors
+    private DigitalInput[] stagerSensors = new DigitalInput[5];
+    private boolean[] stagerBalls = new boolean[5];
+
+    // Shooter encoders
+    private CANEncoder shooterTurretEncoder;
+    private CANEncoder shooterWheelEncoder;
+
+    // Robot position
     private double xPosition = 0;
     private double yPosition = 0;
 
@@ -35,23 +49,35 @@ public class SensorInput {
     }
 
     private SensorInput() {
-        this.robotOutput = RobotOutput.getInstance();
+        this.robotOut = RobotOutput.getInstance();
 
         this.navx = new Navx();
 
         if (Constants.CURRENT_ROBOT == RobotType.COMPBOT2020) {
-            this.driveL1Encoder = robotOutput.getDriveL1Encoder();
-            this.driveL2Encoder = robotOutput.getDriveL2Encoder();
-            this.driveR1Encoder = robotOutput.getDriveR1Encoder();
-            this.driveR2Encoder = robotOutput.getDriveR2Encoder();
+            this.driveL1Encoder = robotOut.getDriveL1Encoder();
+            this.driveL2Encoder = robotOut.getDriveL2Encoder();
+            this.driveR1Encoder = robotOut.getDriveR1Encoder();
+            this.driveR2Encoder = robotOut.getDriveR2Encoder();
     
             this.driveL1Encoder.setPositionConversionFactor(1);
             this.driveL2Encoder.setPositionConversionFactor(1);
             this.driveR1Encoder.setPositionConversionFactor(1);
             this.driveR2Encoder.setPositionConversionFactor(1);
+
+            this.intakeArmEncoder = robotOut.getIntakeArmEncoder();
+            this.intakeArmEncoder.setPositionConversionFactor(1);
+
+            for (int i = 0; i < stagerSensors.length; i++) {
+                stagerSensors[i] = new DigitalInput(i);
+            }
+
+            this.shooterTurretEncoder = robotOut.getShooterTurretEncoder();
+            this.shooterWheelEncoder = robotOut.getShooterWheelEncoder();
+            this.shooterTurretEncoder.setPositionConversionFactor(1.162325);
+            this.shooterWheelEncoder.setPositionConversionFactor(1);
         } else if (Constants.CURRENT_ROBOT == RobotType.MINIBOT) {
-            this.driveL1Encoder = robotOutput.getDriveL1Encoder();
-            this.driveR1Encoder = robotOutput.getDriveR1Encoder();
+            this.driveL1Encoder = robotOut.getDriveL1Encoder();
+            this.driveR1Encoder = robotOut.getDriveR1Encoder();
 
             this.driveL1Encoder.setPositionConversionFactor(1);
             this.driveR1Encoder.setPositionConversionFactor(1);
@@ -71,6 +97,11 @@ public class SensorInput {
             this.driveL2Encoder.setPosition(0);
             this.driveR1Encoder.setPosition(0);
             this.driveR2Encoder.setPosition(0);
+
+            this.intakeArmEncoder.setPosition(0);
+
+            this.shooterTurretEncoder.setPosition(0);
+            this.shooterWheelEncoder.setPosition(0);
         } else if (Constants.CURRENT_ROBOT == RobotType.MINIBOT) {
             this.driveL1Encoder.setPosition(0);
             this.driveR1Encoder.setPosition(0);
@@ -88,6 +119,9 @@ public class SensorInput {
             this.lastTime = System.currentTimeMillis();
         }
 
+        for (int i = 0; i < stagerSensors.length; i++) {
+            stagerBalls[i] = stagerSensors[i].get();
+        }
 
         this.navx.update();
 
@@ -96,6 +130,8 @@ public class SensorInput {
         xPosition += driveXSpeed * this.deltaTime / 1000.0;
         yPosition += driveYSpeed * this.deltaTime / 1000.0;
     }
+
+    /* Drive */
 
     public double getDriveL1Encoder() {
         return this.driveL1Encoder.getPosition();
@@ -177,4 +213,28 @@ public class SensorInput {
         return this.yPosition;
     }
 
+
+    /* Intake */
+
+    public double getIntakeArmEncoder() {
+        return this.intakeArmEncoder.getPosition();
+    }
+
+
+    /* Stager */
+    
+    public boolean[] getStagerSensors() {
+        return this.stagerBalls;
+    }
+
+
+    /* Shooter */
+
+    public double getShooterTurretEncoder() {
+        return this.shooterTurretEncoder.getPosition();
+    }
+
+    public double getShooterWheelEncoder() {
+        return this.shooterWheelEncoder.getPosition();
+    }
 }

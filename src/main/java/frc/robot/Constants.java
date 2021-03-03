@@ -13,14 +13,16 @@ public class Constants {
     public static final RobotType CURRENT_ROBOT = RobotType.MINIBOT;
     public static final double MAXOUTPUT = 0.4;
 
+    // Intake
+    public static final double intakeArmMax = 45;
+    public static final double intakeArmMin = 0;
 
     // Controllers
     public static final double xboxControllerDeadzone = 0.1;
 
-
+    // PID
     public static final double PATH_TURN_P = 6;
 
-    // PID
     private static double miniDriveWheelDiameter = 5.78;
     private static double comp2020DriveWheelDiameter = 0;
 

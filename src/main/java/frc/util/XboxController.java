@@ -38,8 +38,8 @@ public class XboxController {
         return handleDeadband((y ? -1 : 1) * mController.getRawAxis((left ? 0 : 4) + (y ? 1 : 0)), deadband);
     }
 
-    public boolean getTrigger(Side side) {
-        return mController.getRawAxis(side == Side.LEFT ? 2 : 3) > Constants.xboxControllerDeadzone;
+    public double getTrigger(Side side) {
+        return mController.getRawAxis(side == Side.LEFT ? 2 : 3);
     }
 
     public boolean getButton(Button button) {
