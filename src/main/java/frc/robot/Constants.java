@@ -10,8 +10,8 @@ public class Constants {
     public enum RobotType {
         MINIBOT, COMPBOT2020
     }
-    public static final RobotType CURRENT_ROBOT = RobotType.MINIBOT;
-    public static final double MAXOUTPUT = 0.4;
+    public static final RobotType CURRENT_ROBOT = RobotType.COMPBOT2020;
+    public static final double MAXOUTPUT = 1;
 
     // Intake
     public static final double intakeArmMax = 45;

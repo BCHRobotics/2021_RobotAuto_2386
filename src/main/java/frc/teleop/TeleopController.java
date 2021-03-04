@@ -115,6 +115,7 @@ public class TeleopController extends TeleopComponent {
     public void calculate() {
         driver();
 
+        
         if (operatorMode == OperatorMode.DRIVE) {
             operatorDrive();
         } else if (operatorMode == OperatorMode.CLIMB) {
