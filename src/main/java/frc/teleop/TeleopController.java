@@ -81,14 +81,14 @@ public class TeleopController extends TeleopComponent {
 
         /* Intake */
         double intakeSpeed = operatorController.getTrigger(Side.LEFT) - operatorController.getTrigger(Side.RIGHT);
-        intake.setIntakeOutput(intakeSpeed);
+        intake.setIntakeSpeed(intakeSpeed);
 
         if (operatorController.getButton(Button.RB)) {
-            intake.setArmOutput(0.1);
+            intake.setArmSpeed(0.1);
         } else if (operatorController.getButton(Button.LB)) {
-            intake.setArmOutput(-0.25);
+            intake.setArmSpeed(-0.25);
         } else {
-            intake.setArmOutput(0);
+            intake.setArmSpeed(0);
         }
 
         /* Stager */
@@ -96,7 +96,7 @@ public class TeleopController extends TeleopComponent {
             stager.setSpeed(1);
             stager.setState(StagerState.DELAY_UNLOAD);
             stager.unlatch();
-            intake.setIntakeOutput(1);
+            intake.setIntakeSpeed(1);
         }
 
         if (!operatorController.getButton(Button.Y) && intakeSpeed != 0) {

@@ -12,6 +12,10 @@ import frc.util.Point;
 public class Drive extends Subsystem {
     private static Drive instance;
 
+    /**
+     * State of the Drive, changing the state will change the operation of the Drive
+     * @see Drive
+     */
     public enum DriveState {
         OUTPUT, 
         VELOCITY
@@ -31,6 +35,10 @@ public class Drive extends Subsystem {
     private PID straightPID;
     private PID turnPID;
 
+    /**
+     * Get the instance of the {@link Drive}
+     * @return instance
+     */
     public static Drive getInstance() {
         if (instance == null) {
             instance = new Drive();
@@ -38,6 +46,9 @@ public class Drive extends Subsystem {
         return instance;
     }
 
+    /**
+     * Create a Drive and init the robot IO
+     */
     private Drive() {
         this.robotOut = RobotOutput.getInstance();
         this.sensorIn = SensorInput.getInstance();
@@ -45,6 +56,17 @@ public class Drive extends Subsystem {
         this.firstCycle();
     }
 
+    /**
+     * Get the rotated error of the robot position uses {@link Point} to calculate
+     * how far off the robot is from the desired X and Y
+     * @param theta desired angle
+     * @param desiredX desired X position 
+     * @param desiredY desired Y position
+     * @return {@link Point} with the x and y of the error
+     * @see Point
+     * @see SensorInput#getDriveXPos()
+     * @see SensorInput#getDriveYPos()
+     */
     private Point getRotatedError(double theta, double desiredX, double desiredY) {
         double currentX = this.sensorIn.getDriveXPos();
         double currentY = this.sensorIn.getDriveYPos();
@@ -62,6 +84,14 @@ public class Drive extends Subsystem {
         return new Point(xError, yError);
     }
 
+    /**
+     * First cycle of the Drive
+     * Inits the PID loops for the Drive
+     * 
+     * @see PID
+     * @see PIDF
+     * @see Constants
+     */
     @Override
     public void firstCycle() {
         this.straightPID = new PID(Constants.getDriveStraightPID());
@@ -83,8 +113,8 @@ public class Drive extends Subsystem {
 
     /**
      * Sets output to drive
-     * @param y percent output [-1 to 1] for forward movment
-     * @param turn percent output [-1 to 1] for turn movment
+     * @param y percent output [-1 to 1] for forward movement
+     * @param turn percent output [-1 to 1] for turn movement
      */
     public void setOutput(double y, double turn) {
         this.currentState = DriveState.OUTPUT;
@@ -93,11 +123,19 @@ public class Drive extends Subsystem {
         this.rightOut =  (y - turn) * Constants.MAXOUTPUT;
     }
 
+    /**
+     * Set the target velocity of the Drive
+     * @param targetVel target feet per second
+     */
     public void setTargetVelocity(double targetVel) {
         this.leftVelPID.setDesiredValue(targetVel);
         this.rightVelPID.setDesiredValue(targetVel);
     }
 
+    /**
+     * Drive at velocity (FPS)
+     * @param velocity target feet per second
+     */
     public void driveAtVelocity(double velocity) {
         this.currentState = DriveState.VELOCITY;
         this.setTargetVelocity(velocity);
@@ -107,6 +145,11 @@ public class Drive extends Subsystem {
         this.robotOut.setDriveRight(right);
     }
 
+    /**
+     * Set the velocity output per side of the Drive
+     * @param leftOut target feet per second of left motors
+     * @param rightOut target feet per second of right motors
+     */
     public void setVelocityOutput(double leftOut, double rightOut) {
         this.currentState = DriveState.VELOCITY;
 
@@ -120,23 +163,50 @@ public class Drive extends Subsystem {
         this.robotOut.setDriveRight(rightOut);
     }
 
+    /**
+     * Set the ramp rate for the Drive
+     * @param rate ramp rate seconds to full
+     */
     public void setRampRate(double rate) {
         this.robotOut.setDriveRampRate(rate);
     }
 
+    /**
+     * Calculate the actions the Drive will do during operation
+     */
     @Override
     public void calculate() {
         SmartDashboard.putString("DRIVE_STATE", this.currentState.toString());
 
-        if (this.currentState == DriveState.OUTPUT) {
-            this.robotOut.setDriveLeft(this.leftOut);
-            this.robotOut.setDriveRight(this.rightOut);
-        } else if (this.currentState == DriveState.VELOCITY) {
-            this.robotOut.setDriveLeft(this.leftOut);
-            this.robotOut.setDriveRight(this.rightOut);
+        switch (currentState) {
+            case OUTPUT:
+            case VELOCITY:
+                this.robotOut.setDriveLeft(this.leftOut);
+                this.robotOut.setDriveRight(this.rightOut);
+                break;
+            default:
+                disable();
+                break;
         }
     }
 
+    /**
+     * Drive the robot to a specific point.
+     * 
+     * Ignore method for now, more comments coming
+     * 
+     * @param x x position to move to
+     * @param y y position to move to
+     * @param theta angle to move to
+     * @param minVelocity minimum velocity to move at
+     * @param maxVelocity maximum velocity to move at
+     * @param turnRate rate at the drive will turn
+     * @param maxTurn max angle to turn
+     * @param eps max error to finish at
+     * @return true if successfully completed action
+     * 
+     * @see frc.auton.drive.DriveToPoint
+     */
 	public boolean DriveToPoint(double x, double y, double theta, double minVelocity, double maxVelocity,
 		double turnRate, double maxTurn, double eps) {
 		this.straightPID.setMinMaxOutput(minVelocity, maxVelocity);
@@ -212,6 +282,9 @@ public class Drive extends Subsystem {
 		return isDone;
 	}
 
+    /**
+     * Turn off all motors of the Drive
+     */
     @Override
     public void disable() {
         this.robotOut.setDriveLeft(0.0);
