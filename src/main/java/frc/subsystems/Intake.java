@@ -43,12 +43,13 @@ public class Intake extends Subsystem {
     @Override
     public void calculate() {
 
-        if ((sensorIn.getIntakeArmEncoder() <= Constants.intakeArmMin && armSpeed < 0) ||
+        /*if ((sensorIn.getIntakeArmEncoder() <= Constants.intakeArmMin && armSpeed < 0) ||
             (sensorIn.getIntakeArmEncoder() >= Constants.intakeArmMax && armSpeed > 0)) {
             robotOut.setIntakeArm(0);
         } else {
             robotOut.setIntakeArm(armSpeed);
-        }
+        }*/
+        robotOut.setIntakeArm(armSpeed);
 
         robotOut.setIntakeBar(intakeSpeed);
 
