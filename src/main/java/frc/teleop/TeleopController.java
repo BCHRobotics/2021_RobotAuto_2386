@@ -1,5 +1,6 @@
 package frc.teleop;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.io.RobotOutput;
 import frc.io.SensorInput;
 import frc.subsystems.Drive;
@@ -76,12 +77,17 @@ public class TeleopController extends TeleopComponent {
         shooter.setTurretSpeed(deadzone(operatorController.getJoystick(Side.LEFT, Axis.X), 0.2));
 
         if (-operatorController.getJoystick(Side.LEFT, Axis.Y) >= 0.3) {
-            shooter.setWheelSpeed(-operatorController.getJoystick(Side.LEFT, Axis.Y)*2);
+            shooter.setWheelSpeed(-operatorController.getJoystick(Side.LEFT, Axis.Y));
+        } else {
+            shooter.setWheelSpeed(0);
         }
 
         /* Intake */
         double intakeSpeed = operatorController.getTrigger(Side.LEFT) - operatorController.getTrigger(Side.RIGHT);
         intake.setIntakeSpeed(intakeSpeed);
+        if (intakeSpeed != 0) {
+            stager.setState(StagerState.LOAD);
+        }
 
         if (operatorController.getButton(Button.RB)) {
             intake.setArmSpeed(0.1);
@@ -92,16 +98,17 @@ public class TeleopController extends TeleopComponent {
         }
 
         /* Stager */
-        if (operatorController.getButton(Button.X) || operatorController.getButton(Button.Y)) {
+        if (operatorController.getButton(Button.X)) {
             stager.setSpeed(1);
-            stager.setState(StagerState.DELAY_UNLOAD);
-            stager.unlatch();
-            intake.setIntakeSpeed(1);
+            stager.setState(StagerState.UNLOAD_FULL_SPEED);
         }
 
         if (!operatorController.getButton(Button.Y) && intakeSpeed != 0) {
             stager.setSpeed(0.47);
             stager.setState(StagerState.LOAD);
+        } else if (operatorController.getButton(Button.X)) {
+            stager.setSpeed(1);
+            stager.setState(StagerState.DELAY_UNLOAD);
         } else {
             stager.setState(StagerState.STOP);
         }

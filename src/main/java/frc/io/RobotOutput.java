@@ -95,7 +95,7 @@ public class RobotOutput {
             this.driveR1.setSmartCurrentLimit(60, 10);  
             this.driveR2.setSmartCurrentLimit(60, 10);
 
-            this.intakeArm.setInverted(false);
+            this.intakeArm.setInverted(true);
             this.intakeBar.setInverted(false);
 
             this.stager0.setInverted(true);

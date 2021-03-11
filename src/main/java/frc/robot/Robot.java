@@ -108,8 +108,5 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     this.sensorInput.update();
     this.dashboard.updateAll();
-    
-    DriveToPoint dtp = new DriveToPoint(10, 0, 9, 5000);
-    dtp.calculate();
   }
 }

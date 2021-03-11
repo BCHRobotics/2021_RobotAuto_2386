@@ -61,12 +61,10 @@ public class Shooter extends Subsystem {
 
         double position = sensorIn.getShooterTurretEncoder();
 
-        if ((position <= minTurret && speed < 0) || (position >= maxTurret && speed > 0)) {
-            turretSpeed = 0;
-        } else if ((position <= minSafeTurret && speed < 0) || (position >= maxSafeTurret && speed > 0)) {
-            turretSpeed = speed * 0.1;
-        } else if ((position <= minVerySafeTurret && speed < 0) || (position >= maxVerySafeTurret && speed > 0)) {
-            turretSpeed = speed * 0.2;
+        if (speed > 0 && position > 0) {
+            turretSpeed = (-0.000123 * (position*position) + 1) * speed;
+        } else if (speed < 0 && position < 0) {
+            turretSpeed = (-0.000123 * (position*position) + 1) * speed;
         } else {
             turretSpeed = speed;
         }

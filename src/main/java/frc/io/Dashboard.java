@@ -1,7 +1,10 @@
 package frc.io;
 
+import org.ejml.dense.row.linsol.qr.BaseLinearSolverQrp_DDRM;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.subsystems.Stager;
 import frc.util.PIDConstants;
 
 public class Dashboard {
@@ -23,16 +26,30 @@ public class Dashboard {
     }
 
     public void updateSensorDisplay() {
-        SensorInput sensorInput = SensorInput.getInstance();
+        SensorInput sensorIn = SensorInput.getInstance();
 
-        SmartDashboard.putNumber("Gyro", sensorInput.getGyroAngle());
+        SmartDashboard.putNumber("Gyro", sensorIn.getGyroAngle());
         
-        SmartDashboard.putNumber("DriveL1", sensorInput.getDriveL1Encoder());
-        SmartDashboard.putNumber("DriveL2", sensorInput.getDriveL2Encoder());
-        SmartDashboard.putNumber("DriveR1", sensorInput.getDriveR1Encoder());
-        SmartDashboard.putNumber("DriveR2", sensorInput.getDriveR2Encoder());
+        SmartDashboard.putNumber("DriveL1", sensorIn.getDriveL1Encoder());
+        SmartDashboard.putNumber("DriveL2", sensorIn.getDriveL2Encoder());
+        SmartDashboard.putNumber("DriveR1", sensorIn.getDriveR1Encoder());
+        SmartDashboard.putNumber("DriveR2", sensorIn.getDriveR2Encoder());
 
-        SmartDashboard.putNumber("DriveL1FPS", sensorInput.getDriveL1SpeedFPS());
+        SmartDashboard.putNumber("DriveL1FPS", sensorIn.getDriveL1SpeedFPS());
+
+        SmartDashboard.putNumber("IntakeArm", sensorIn.getIntakeArmEncoder());
+
+        boolean[] balls = {
+            sensorIn.getStagerSensor0(),
+            sensorIn.getStagerSensor1(),
+            sensorIn.getStagerSensor2()
+        };
+        for (int i = 0; i < balls.length; i++) {
+            SmartDashboard.putBoolean("balls" + i, balls[i]);
+        }
+
+        Stager stager = Stager.getInstance();
+        SmartDashboard.putString("stagerState", stager.getState().toString());
     }
 
     // Get the PID Constants

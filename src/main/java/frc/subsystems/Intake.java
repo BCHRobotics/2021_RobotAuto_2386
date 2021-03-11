@@ -62,8 +62,8 @@ public class Intake extends Subsystem {
     public void setArmSpeed(double speed) {
         if (speed < -1 || speed > 1) throw new IllegalArgumentException("Speed must be >= -1 and <= 1");
 
-        if ((sensorIn.getIntakeArmEncoder() <= Constants.intakeArmMin && armSpeed < 0) ||
-            (sensorIn.getIntakeArmEncoder() >= Constants.intakeArmMax && armSpeed > 0)) {
+        if ((sensorIn.getIntakeArmEncoder() <= 0 && speed < 0) ||
+            (sensorIn.getIntakeArmEncoder() >= 19 && speed > 0)) {
             armSpeed = 0;
         } else {
             armSpeed = speed;

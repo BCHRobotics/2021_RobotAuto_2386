@@ -27,8 +27,9 @@ public class SensorInput {
     private CANEncoder intakeArmEncoder;
 
     // Stager sensors
-    private DigitalInput[] stagerSensors = new DigitalInput[5];
-    private boolean[] stagerBalls = new boolean[5];
+    private DigitalInput stagerSensor0;
+    private DigitalInput stagerSensor1;
+    private DigitalInput stagerSensor2;
 
     // Shooter encoders
     private CANEncoder shooterTurretEncoder;
@@ -67,9 +68,9 @@ public class SensorInput {
             this.intakeArmEncoder = robotOut.getIntakeArmEncoder();
             this.intakeArmEncoder.setPositionConversionFactor(1);
 
-            for (int i = 0; i < stagerSensors.length; i++) {
-                stagerSensors[i] = new DigitalInput(i);
-            }
+            this.stagerSensor0 = new DigitalInput(4);
+            this.stagerSensor1 = new DigitalInput(3);
+            this.stagerSensor2 = new DigitalInput(0);
 
             this.shooterTurretEncoder = robotOut.getShooterTurretEncoder();
             this.shooterWheelEncoder = robotOut.getShooterWheelEncoder();
@@ -117,10 +118,6 @@ public class SensorInput {
         } else {
             this.deltaTime = System.currentTimeMillis() - lastTime;
             this.lastTime = System.currentTimeMillis();
-        }
-
-        for (int i = 0; i < stagerSensors.length; i++) {
-            stagerBalls[i] = stagerSensors[i].get();
         }
 
         this.navx.update();
@@ -223,10 +220,17 @@ public class SensorInput {
 
     /* Stager */
     
-    public boolean[] getStagerSensors() {
-        return this.stagerBalls;
+    public boolean getStagerSensor0() {
+        return !stagerSensor0.get();
     }
 
+    public boolean getStagerSensor1() {
+        return !stagerSensor1.get();
+    }
+
+    public boolean getStagerSensor2() {
+        return !stagerSensor2.get();
+    }
 
     /* Shooter */
 

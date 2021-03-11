@@ -1,5 +1,6 @@
 package frc.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.io.RobotOutput;
 import frc.io.SensorInput;
 
@@ -30,7 +31,6 @@ public class Stager extends Subsystem {
 
     private StagerState currentState = StagerState.STOP;
     private double speed;
-    private boolean latch;
 
     private long delayStart;
     
@@ -85,28 +85,21 @@ public class Stager extends Subsystem {
     }
 
     /**
-     * unlatch the latch, call this when you shoot
-     */
-    public void unlatch() {
-        this.latch = false;
-    }
-
-    /**
      * Load the balls into the stager at a specific speed
      * @param speed speed to load the balls (>= 0 and <= 1)
      */
     private void load(double speed) {
         if (speed < 0 || speed > 1) throw new IllegalArgumentException("speed must be >= 0 and <= 1");
 
-        boolean[] balls = sensorIn.getStagerSensors();
+        boolean[] balls = {
+            sensorIn.getStagerSensor0(),
+            sensorIn.getStagerSensor1(),
+            sensorIn.getStagerSensor2()
+        };
 
-        if (balls[3] || balls[4]) {
-            latch = true;
-        }
-
-        stagerOutput[2] = latch ? 0 : speed;
-        stagerOutput[1] = (balls[2] && balls[3]) ? 0 : speed * 0.6;
-        stagerOutput[0] = (balls[1] && balls[2] && balls[3]) ? 0 : speed * 0.6;
+        stagerOutput[2] = (balls[2]) ? 0 : speed;
+        stagerOutput[1] = (balls[1] && balls[2]) ? 0 : speed * 0.6;
+        stagerOutput[0] = (balls[0] && balls[1] && balls[2]) ? 0 : speed * 0.6;
     }
 
     /**
@@ -128,20 +121,18 @@ public class Stager extends Subsystem {
     private void delayedUnload(long delay) {
         if (delay < 0) throw new IllegalArgumentException("delay must be >= 0");
 
-        if (delayStart + (delay*3) > System.currentTimeMillis()) {
-            stagerOutput[0] = 1;
-            stagerOutput[1] = 1;
-            stagerOutput[2] = 1;
-        } else if (delayStart + (delay*2) > System.currentTimeMillis()) {
-            stagerOutput[0] = 0;
-            stagerOutput[1] = 1;
-            stagerOutput[2] = 1;
-        } else if (delayStart + (delay*1) > System.currentTimeMillis()) {
+        if (System.currentTimeMillis() < delayStart + (delay*1)) {
             stagerOutput[0] = 0;
             stagerOutput[1] = 0;
             stagerOutput[2] = 1;
-        } else {
-            currentState = StagerState.STOP;
+        } else if (System.currentTimeMillis() < delayStart + (delay*2)) {
+            stagerOutput[0] = 0;
+            stagerOutput[1] = 1 * 0.4;
+            stagerOutput[2] = 1;
+        } else if (System.currentTimeMillis() < delayStart + (delay*3)) {
+            stagerOutput[0] = 1 * 0.4;
+            stagerOutput[1] = 1 * 0.4;
+            stagerOutput[2] = 1;
         }
     }
 
@@ -197,7 +188,9 @@ public class Stager extends Subsystem {
                 break;
             case STOP:
             default:
-                disable();
+                stagerOutput[0] = 0;
+                stagerOutput[1] = 0;
+                stagerOutput[2] = 0;
                 break;
         }
 
@@ -206,8 +199,11 @@ public class Stager extends Subsystem {
         }
 
         robotOut.setStager0(stagerOutput[0]);
-        robotOut.setStager0(stagerOutput[1]);
-        robotOut.setStager0(stagerOutput[2]);
+        robotOut.setStager1(stagerOutput[1]);
+        robotOut.setStager2(stagerOutput[2]);
+        SmartDashboard.putNumber("stager0", stagerOutput[0]);
+        SmartDashboard.putNumber("stager0", stagerOutput[1]);
+        SmartDashboard.putNumber("stager0", stagerOutput[2]);
     }
 
     /**
