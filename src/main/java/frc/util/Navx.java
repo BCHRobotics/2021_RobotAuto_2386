@@ -3,11 +3,23 @@ package frc.util;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 
 public class Navx extends AHRS {
     
     private double prevAngle;
     private double angle;
+
+    public Navx(SerialPort.Port port) {
+        super(port);
+        this.reset();
+    }
+
+    public Navx(SPI.Port port) {
+        super(port);
+        this.reset();
+    }
 
     public Navx() {
         super(SPI.Port.kMXP);

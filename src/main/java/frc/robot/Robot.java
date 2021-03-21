@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.auton.drive.DriveToPoint;
 import frc.io.Dashboard;
@@ -39,6 +40,8 @@ public class Robot extends TimedRobot {
     this.dashboard = Dashboard.getInstance();
     this.drive = Drive.getInstance();
     this.sensorInput.reset();
+
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
   }
 
   /** This function is called periodically when the robot is on. */
@@ -57,6 +60,10 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     this.sensorInput.update();
     this.dashboard.updateAll();
+
+    this.drive.DriveToPoint(20, 0, 0, 0, 100, 1, 1, 2);
+
+    drive.calculate();
   }
 
   /** This function is called once when teleop is enabled. */

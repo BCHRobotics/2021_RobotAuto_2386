@@ -3,6 +3,8 @@ package frc.io;
 import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import frc.robot.Constants;
 import frc.robot.Constants.RobotType;
 import frc.util.Navx;
@@ -52,18 +54,20 @@ public class SensorInput {
     private SensorInput() {
         this.robotOut = RobotOutput.getInstance();
 
-        this.navx = new Navx();
-
         if (Constants.CURRENT_ROBOT == RobotType.COMPBOT2020) {
+            this.navx = new Navx(SerialPort.Port.kUSB);
+
             this.driveL1Encoder = robotOut.getDriveL1Encoder();
             this.driveL2Encoder = robotOut.getDriveL2Encoder();
             this.driveR1Encoder = robotOut.getDriveR1Encoder();
             this.driveR2Encoder = robotOut.getDriveR2Encoder();
     
-            this.driveL1Encoder.setPositionConversionFactor(1);
-            this.driveL2Encoder.setPositionConversionFactor(1);
-            this.driveR1Encoder.setPositionConversionFactor(1);
-            this.driveR2Encoder.setPositionConversionFactor(1);
+            // when factor 1 travels: 46.4
+            double driveFactor = 100 / 46.4;
+            this.driveL1Encoder.setPositionConversionFactor(driveFactor);
+            this.driveL2Encoder.setPositionConversionFactor(driveFactor);
+            this.driveR1Encoder.setPositionConversionFactor(driveFactor);
+            this.driveR2Encoder.setPositionConversionFactor(driveFactor);
 
             this.intakeArmEncoder = robotOut.getIntakeArmEncoder();
             this.intakeArmEncoder.setPositionConversionFactor(1);
@@ -77,6 +81,8 @@ public class SensorInput {
             this.shooterTurretEncoder.setPositionConversionFactor(1.162325);
             this.shooterWheelEncoder.setPositionConversionFactor(1);
         } else if (Constants.CURRENT_ROBOT == RobotType.MINIBOT) {
+            this.navx = new Navx(SPI.Port.kMXP);
+
             this.driveL1Encoder = robotOut.getDriveL1Encoder();
             this.driveR1Encoder = robotOut.getDriveR1Encoder();
 
