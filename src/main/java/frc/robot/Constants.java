@@ -6,6 +6,7 @@ import frc.util.PIDConstants;
 public class Constants {
     
     public static final boolean USING_DASHBOARD = true;
+    public static final boolean DASHBOARD_WHEEL_SET = false;
 
     public enum RobotType {
         MINIBOT, COMPBOT2020

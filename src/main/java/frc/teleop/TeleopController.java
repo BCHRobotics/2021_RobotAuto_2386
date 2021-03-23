@@ -9,6 +9,7 @@ import frc.subsystems.Drive;
 import frc.subsystems.Intake;
 import frc.subsystems.Shooter;
 import frc.subsystems.Stager;
+import frc.subsystems.Shooter.ShooterWheelState;
 import frc.subsystems.Stager.StagerState;
 import frc.util.XboxController;
 import frc.util.XboxController.Axis;
@@ -79,9 +80,16 @@ public class TeleopController extends TeleopComponent {
         shooter.setTurretSpeed(deadzone(operatorController.getJoystick(Side.LEFT, Axis.X), 0.2));
 
         if (-operatorController.getJoystick(Side.LEFT, Axis.Y) >= 0.3) {
+            shooter.setWheelState(ShooterWheelState.PERCENT_OUTPUT);
             shooter.setWheelSpeed(-operatorController.getJoystick(Side.LEFT, Axis.Y));
         } else {
-            shooter.setWheelSpeed(0);
+            if (Constants.DASHBOARD_WHEEL_SET) {
+                shooter.setWheelState(ShooterWheelState.VELOCITY);
+                double rpm = SmartDashboard.getNumber("ShooterSetRpm", 0);
+                shooter.setWheelRpm(rpm);
+            } else {
+                shooter.setWheelSpeed(0);
+            }    
         }
 
         /* Intake */

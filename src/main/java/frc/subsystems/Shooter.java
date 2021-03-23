@@ -2,6 +2,7 @@ package frc.subsystems;
 
 import com.revrobotics.CANPIDController;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.io.RobotOutput;
 import frc.io.SensorInput;
 import frc.robot.Constants;
@@ -35,7 +36,7 @@ public class Shooter extends Subsystem {
     private ShooterTurretState currentTurretState = ShooterTurretState.PERCENT_OUTPUT;
 
     public enum ShooterWheelState {
-        PERCENT_OUTPUT, VELOCITY      
+        PERCENT_OUTPUT, VELOCITY     
     }
 
     public enum ShooterTurretState {
@@ -68,6 +69,14 @@ public class Shooter extends Subsystem {
 
     public void setWheelState(ShooterWheelState state) {
         this.currentWheelState = state;
+    }
+
+    public ShooterTurretState getTurretState() {
+        return currentTurretState;
+    }
+
+    public void setTurretState(ShooterTurretState state) {
+        this.currentTurretState = state;
     }
 
     /**

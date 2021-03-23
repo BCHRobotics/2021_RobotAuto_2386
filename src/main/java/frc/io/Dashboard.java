@@ -21,6 +21,7 @@ public class Dashboard {
 
     public Dashboard() {
         SmartDashboard.putNumber("Path Turn P", Constants.PATH_TURN_P);
+        SmartDashboard.putNumber("ShooterSetRpm", 0);
     }
 
     public void updateAll() {
