@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.auton.AutonControl;
 import frc.auton.drive.DriveToPoint;
 import frc.io.Dashboard;
 import frc.io.RobotOutput;
@@ -52,6 +53,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     robotOutput.setDriveRampRate(0.0);
+    AutonControl.getInstance().initialize();
+    AutonControl.getInstance().setRunning(true);
+    AutonControl.getInstance().setOverrideAuto(false);
     this.sensorInput.reset();
   }
 
@@ -60,33 +64,32 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     this.sensorInput.update();
     this.dashboard.updateAll();
-
-    this.drive.DriveToPoint(20, 0, 0, 0, 100, 1, 1, 2);
-
-    drive.calculate();
+    AutonControl.getInstance().runCycle();
   }
 
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
-    // TODO add auto done check
-
-    robotOutput.setDriveRampRate(0.15);
-    this.teleopControl.initialize();
-    Robot.teleopInitialized = true;
+    if (!AutonControl.getInstance().isRunning()) {
+        robotOutput.setDriveRampRate(0.15);
+        this.teleopControl.initialize();
+        Robot.teleopInitialized = true;
+    }
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    // TODO add auto done check
-
-    if (!Robot.teleopInitialized) {
-      this.teleopInit();
+    if (AutonControl.getInstance().isRunning()) {
+        this.autonomousPeriodic();
+    } else {
+        if (!Robot.teleopInitialized) {
+            this.teleopInit();
+          }
+          this.sensorInput.update();
+          this.teleopControl.runCycle();
+          this.dashboard.updateAll();
     }
-    this.sensorInput.update();
-    this.teleopControl.runCycle();
-    this.dashboard.updateAll();
   }
 
   /** This function is called once when the robot is disabled. */
@@ -101,6 +104,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     this.sensorInput.update();
     this.dashboard.updateAll();
+    AutonControl.getInstance().updateModes();
   }
 
   /** This function is called once when test mode is enabled. */
@@ -108,6 +112,9 @@ public class Robot extends TimedRobot {
   public void testInit() {
     this.sensorInput.reset();
     this.drive.firstCycle();
+    if (this.pushToDashboard) {
+        Constants.pushValues();
+    }
   }
 
   /** This function is called periodically during test mode. */

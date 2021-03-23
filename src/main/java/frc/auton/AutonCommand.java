@@ -48,7 +48,7 @@ public abstract class AutonCommand {
 		long timePassed = System.currentTimeMillis() - this.startTime;
 
 		if (this.timeout > 0 && timePassed > this.timeout) {
-			System.out.println("TIME OUT OCCURED " + this.getClass().getName());
+			System.out.println("TIME OUT OCCURRED " + this.getClass().getName());
 			this.override();
 			return true;
 		} else if (done) {

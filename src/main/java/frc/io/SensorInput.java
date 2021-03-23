@@ -99,6 +99,9 @@ public class SensorInput {
         this.firstCycle = true;
         this.navx.reset();
 
+        this.xPosition = 0;
+        this.yPosition = 0;
+
         if (Constants.CURRENT_ROBOT == RobotType.COMPBOT2020) {
             this.driveL1Encoder.setPosition(0);
             this.driveL2Encoder.setPosition(0);

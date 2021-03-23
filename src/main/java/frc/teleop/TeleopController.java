@@ -3,6 +3,8 @@ package frc.teleop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.io.RobotOutput;
 import frc.io.SensorInput;
+import frc.robot.Constants;
+import frc.robot.Constants.RobotType;
 import frc.subsystems.Drive;
 import frc.subsystems.Intake;
 import frc.subsystems.Shooter;
@@ -120,34 +122,37 @@ public class TeleopController extends TeleopComponent {
 
     @Override
     public void calculate() {
+        
         driver();
 
-        
-        if (operatorMode == OperatorMode.DRIVE) {
-            operatorDrive();
-        } else if (operatorMode == OperatorMode.CLIMB) {
-            operatorClimb();
-        }
+        if (Constants.CURRENT_ROBOT == RobotType.COMPBOT2020) {
+            if (operatorMode == OperatorMode.DRIVE) {
+                operatorDrive();
+            } else if (operatorMode == OperatorMode.CLIMB) {
+                operatorClimb();
+            }
 
-        /** Debounce checker control for switching operator modes */
-        if ((operatorController.getButton(Button.START) || operatorController.getButton(Button.BACK)) && !deBounce) {
-            deBounce = true;
-            deBounceEnd = System.currentTimeMillis() + 250;
-            operatorController.setRumble(true);
+            /** Debounce checker control for switching operator modes */
+            if ((operatorController.getButton(Button.START) || operatorController.getButton(Button.BACK)) && !deBounce) {
+                deBounce = true;
+                deBounceEnd = System.currentTimeMillis() + 250;
+                operatorController.setRumble(true);
 
-            operatorMode = operatorMode == OperatorMode.DRIVE ? OperatorMode.CLIMB : OperatorMode.DRIVE;
-        }
+                operatorMode = operatorMode == OperatorMode.DRIVE ? OperatorMode.CLIMB : OperatorMode.DRIVE;
+            }
 
-        if (System.currentTimeMillis() > deBounceEnd) {
-            deBounce = false;
-            operatorController.setRumble(false);
+            if (System.currentTimeMillis() > deBounceEnd) {
+                deBounce = false;
+                operatorController.setRumble(false);
+            }
+
+            this.shooter.calculate();
+            this.intake.calculate();
+            this.stager.calculate();
         }
 
         /* Calculates */
-        this.drive.calculate();
-        this.shooter.calculate();
-        this.intake.calculate();
-        this.stager.calculate();
+        this.drive.calculate(); 
     }
 
     private static double deadzone(double input, double deadzone) {

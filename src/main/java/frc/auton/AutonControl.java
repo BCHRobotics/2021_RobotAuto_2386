@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.auton.mode.AutonBuilder;
 import frc.auton.mode.AutonMode;
+import frc.auton.mode.rechargeAtHome.BarrelRacing;
+import frc.auton.mode.rechargeAtHome.BouncePath;
+import frc.auton.mode.rechargeAtHome.Slalom;
+import frc.auton.mode.testing.Test1;
 import frc.io.DriverInput;
 import frc.io.RobotOutput;
 import frc.robot.Robot;
@@ -64,24 +68,13 @@ public class AutonControl {
 
         // GOTCHA: remember to put all auton modes here
 
-        // --- STEP 1 SUBMODES
-        ArrayList<AutonMode> step1 = this.autonSteps.get(0);
+        ArrayList<AutonMode> autos = this.autonSteps.get(0);
 
-        // step1.add(new DefaultMode()); // 0
+        autos.add(new Test1());
+        autos.add(new BarrelRacing());
+        autos.add(new BouncePath());
+        autos.add(new Slalom());
        
-        // step1.add(new Drive25feetTest());
-
-        // --- STEP 2 SUBMODES
-        //ArrayList<AutonMode> step2 = this.autonSteps.get(1);
-        //step2.add(new DefaultMode()); // 0
-
-        // --- STEP 3 SUBMODES
-        //ArrayList<AutonMode> step3 = this.autonSteps.get(2);
-        //step3.add(new DefaultMode()); // 0
-
-        // --- STEP 4 SUBMODES
-        //ArrayList<AutonMode> step4 = this.autonSteps.get(3);
-        //step4.add(new DefaultMode());
 
     }
 

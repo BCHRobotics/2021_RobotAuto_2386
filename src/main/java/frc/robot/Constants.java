@@ -10,7 +10,7 @@ public class Constants {
     public enum RobotType {
         MINIBOT, COMPBOT2020
     }
-    public static final RobotType CURRENT_ROBOT = RobotType.COMPBOT2020;
+    public static final RobotType CURRENT_ROBOT = RobotType.MINIBOT;
     public static final double MAXOUTPUT = 1;
 
     // Intake
@@ -42,7 +42,7 @@ public class Constants {
 
     public static PIDConstants getDriveTurnPID() {
         if (USING_DASHBOARD) {
-            return dashboard.getPIDConstants("TRUN_PID", driveTurnPID);
+            return dashboard.getPIDConstants("TURN_PID", driveTurnPID);
         } else {
             return driveTurnPID;
         }
@@ -67,7 +67,7 @@ public class Constants {
 
     public static void pushValues() {
         dashboard.putPIDConstants("DRIVE_PID", driveStraightPID);
-        dashboard.putPIDConstants("TRUN_PID", driveTurnPID);
+        dashboard.putPIDConstants("TURN_PID", driveTurnPID);
         dashboard.putPIDConstants("DRIVE_VELOCITY_PID", driveVelocityPID);
     }
     
