@@ -11,7 +11,7 @@ public class Constants {
     public enum RobotType {
         MINIBOT, COMPBOT2020
     }
-    public static final RobotType CURRENT_ROBOT = RobotType.MINIBOT;
+    public static final RobotType CURRENT_ROBOT = RobotType.COMPBOT2020;
     public static final double MAXOUTPUT = 1;
 
     // Intake
@@ -25,7 +25,7 @@ public class Constants {
     public static final double PATH_TURN_P = 6;
 
     private static double miniDriveWheelDiameter = 5.78;
-    private static double comp2020DriveWheelDiameter = 0;
+    private static double comp2020DriveWheelDiameter = 6;
 
 	private static PIDConstants driveStraightPID = new PIDConstants(3.0, 0.04, 5.0, 0.05);
 	private static PIDConstants driveTurnPID = new PIDConstants(0.2, 0.005, 0.6, 1);

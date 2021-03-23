@@ -3,6 +3,7 @@ package frc.subsystems;
 import com.revrobotics.CANPIDController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.imaging.Limelight;
 import frc.io.RobotOutput;
 import frc.io.SensorInput;
 import frc.robot.Constants;
@@ -25,6 +26,7 @@ public class Shooter extends Subsystem {
 
     private RobotOutput robotOut;
     private SensorInput sensorIn;
+    private Limelight limelight;
 
     private double turretSpeed;
     private double wheelSpeed;
@@ -60,6 +62,7 @@ public class Shooter extends Subsystem {
     private Shooter() {
         robotOut = RobotOutput.getInstance();
         sensorIn = SensorInput.getInstance();
+        limelight = Limelight.getInstance();
         this.firstCycle();
     }
 
@@ -116,10 +119,7 @@ public class Shooter extends Subsystem {
      */
     @Override
     public void firstCycle() {
-        this.turretPID = new PID(Constants.getTurretPID());
-        this.turretPID.setMinDoneCycles(10);
-        this.turretPID.setMaxOutput(1);
-        this.turretPID.setIRange(1);
+
     }
 
     /**
@@ -135,21 +135,20 @@ public class Shooter extends Subsystem {
         }
 
         if (currentTurretState == ShooterTurretState.VISION) {
-            TurretVision(0, 3, 5);
-            robotOut.setShooterTurret(turretSpeed);
+            limelight.setLedMode(3);
+            if (limelight.getTargetExists()) {
+                if (limelight.getTargetX() > 1.75 || limelight.getTargetX() < -1.75) {
+                    robotOut.setShooterTurret(limelight.getTargetX() * 0.025);
+                } else {
+                    robotOut.setShooterTurret(0);
+                }
+            } else {
+                robotOut.setShooterTurret(0);
+            }
         } else {
             robotOut.setShooterTurret(turretSpeed);
+            limelight.setLedMode(1);
         }
-    }
-
-    public void TurretVision(double minVelocity, double maxVelocity, double eps) {
-        this.turretPID.setMinMaxOutput(minVelocity, maxVelocity);
-        this.turretPID.setFinishedRange(eps);
-        this.turretPID.setDesiredValue(0);
-        
-        double output = this.turretPID.calcPID(sensorIn.getShooterTurretEncoder());
-
-        this.turretSpeed = output;
     }
 
     /**
