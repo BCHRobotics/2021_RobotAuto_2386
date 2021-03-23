@@ -1,7 +1,11 @@
 package frc.subsystems;
 
+import com.revrobotics.CANPIDController;
+
 import frc.io.RobotOutput;
 import frc.io.SensorInput;
+import frc.robot.Constants;
+import frc.util.PID;
 
 /**
  * Shooter of the robot.
@@ -23,14 +27,20 @@ public class Shooter extends Subsystem {
 
     private double turretSpeed;
     private double wheelSpeed;
+    private double wheelRpm;
 
-    // when the turret gets past these ranges it will slow down
-    private static final int minTurret = -75;
-    private static final int minSafeTurret = -45;
-    private static final int minVerySafeTurret = -15;
-    private static final int maxTurret = 190;
-    private static final int maxSafeTurret = 160;
-    private static final int maxVerySafeTurret = 130;
+    private PID turretPID;
+
+    private ShooterWheelState currentWheelState = ShooterWheelState.PERCENT_OUTPUT;
+    private ShooterTurretState currentTurretState = ShooterTurretState.PERCENT_OUTPUT;
+
+    public enum ShooterWheelState {
+        PERCENT_OUTPUT, VELOCITY      
+    }
+
+    public enum ShooterTurretState {
+        PERCENT_OUTPUT, VISION
+    }
 
     /**
      * Get the instance of the {@link Shooter}
@@ -52,6 +62,14 @@ public class Shooter extends Subsystem {
         this.firstCycle();
     }
 
+    public ShooterWheelState getWheelState() {
+        return currentWheelState;
+    }
+
+    public void setWheelState(ShooterWheelState state) {
+        this.currentWheelState = state;
+    }
+
     /**
      * Set the speed of the turret
      * @param speed speed the turret turns (>= -1 and <= 1)
@@ -70,6 +88,10 @@ public class Shooter extends Subsystem {
         }
     }
 
+    public void setWheelRpm(double rpm) {
+        this.wheelRpm = rpm;
+    }
+
     /**
      * Set the speed of the fly wheel
      * @param speed speed of the fly wheel (>= 0 and <= 1)
@@ -85,7 +107,10 @@ public class Shooter extends Subsystem {
      */
     @Override
     public void firstCycle() {
-
+        this.turretPID = new PID(Constants.getTurretPID());
+        this.turretPID.setMinDoneCycles(10);
+        this.turretPID.setMaxOutput(1);
+        this.turretPID.setIRange(1);
     }
 
     /**
@@ -93,8 +118,29 @@ public class Shooter extends Subsystem {
      */
     @Override
     public void calculate() {
-        robotOut.setShooterTurret(turretSpeed);
-        robotOut.setShooterWheel(wheelSpeed);
+
+        if (currentWheelState == ShooterWheelState.VELOCITY) {
+            robotOut.setShooterWheelRPM(wheelRpm);
+        } else {
+            robotOut.setShooterWheel(wheelSpeed);
+        }
+
+        if (currentTurretState == ShooterTurretState.VISION) {
+            TurretVision(0, 3, 5);
+            robotOut.setShooterTurret(turretSpeed);
+        } else {
+            robotOut.setShooterTurret(turretSpeed);
+        }
+    }
+
+    public void TurretVision(double minVelocity, double maxVelocity, double eps) {
+        this.turretPID.setMinMaxOutput(minVelocity, maxVelocity);
+        this.turretPID.setFinishedRange(eps);
+        this.turretPID.setDesiredValue(0);
+        
+        double output = this.turretPID.calcPID(sensorIn.getShooterTurretEncoder());
+
+        this.turretSpeed = output;
     }
 
     /**
@@ -104,4 +150,5 @@ public class Shooter extends Subsystem {
     public void disable() {
         robotOut.setShooterTurret(0);
     }
+
 }

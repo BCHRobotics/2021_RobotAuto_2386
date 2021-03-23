@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.auton.AutonControl;
 import frc.auton.drive.DriveToPoint;
+import frc.imaging.Limelight;
 import frc.io.Dashboard;
 import frc.io.RobotOutput;
 import frc.io.SensorInput;
@@ -42,7 +43,7 @@ public class Robot extends TimedRobot {
     this.drive = Drive.getInstance();
     this.sensorInput.reset();
 
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
+    Limelight.getInstance().setLedMode(1);
   }
 
   /** This function is called periodically when the robot is on. */
