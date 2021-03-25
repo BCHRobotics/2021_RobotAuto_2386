@@ -1,5 +1,6 @@
 package frc.auton.drive;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.auton.AutonCommand;
 import frc.auton.RobotComponent;
 import frc.io.Dashboard;
@@ -57,6 +58,10 @@ public class DriveToPoint extends AutonCommand {
 		this.drive = Drive.getInstance();
 		
 		this.robotOut = RobotOutput.getInstance();
+
+        SmartDashboard.putNumber("SetPointX", x);
+        SmartDashboard.putNumber("SetPointY", y);
+        SmartDashboard.putNumber("SetPointGyro", theta);
 	}
 
 	@Override

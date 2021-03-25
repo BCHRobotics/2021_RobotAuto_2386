@@ -44,6 +44,7 @@ public class Robot extends TimedRobot {
     this.sensorInput.reset();
 
     Limelight.getInstance().setLedMode(1);
+    Constants.pushValues();
   }
 
   /** This function is called periodically when the robot is on. */
@@ -57,6 +58,7 @@ public class Robot extends TimedRobot {
     AutonControl.getInstance().initialize();
     AutonControl.getInstance().setRunning(true);
     AutonControl.getInstance().setOverrideAuto(false);
+    drive.firstCycle();
     this.sensorInput.reset();
   }
 

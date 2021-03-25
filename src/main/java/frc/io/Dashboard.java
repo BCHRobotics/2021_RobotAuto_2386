@@ -1,9 +1,6 @@
 package frc.io;
 
-import org.ejml.dense.row.linsol.qr.BaseLinearSolverQrp_DDRM;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.auton.mode.AutonMode;
 import frc.robot.Constants;
 import frc.robot.Constants.RobotType;
 import frc.subsystems.Stager;
@@ -22,6 +19,10 @@ public class Dashboard {
     public Dashboard() {
         SmartDashboard.putNumber("Path Turn P", Constants.PATH_TURN_P);
         SmartDashboard.putNumber("ShooterSetRpm", 0);
+
+        SmartDashboard.putNumber("SetPointX", 0);
+        SmartDashboard.putNumber("SetPointY", 0);
+        SmartDashboard.putNumber("SetPointGyro", 0);
     }
 
     public void updateAll() {
