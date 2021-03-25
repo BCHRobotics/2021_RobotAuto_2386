@@ -27,7 +27,7 @@ public class Constants {
     private static double miniDriveWheelDiameter = 5.78;
     private static double comp2020DriveWheelDiameter = 6;
 
-	private static PIDConstants driveStraightPID = new PIDConstants(3.0, 0.04, 5.0, 0.05);
+	private static PIDConstants driveStraightPID = new PIDConstants(0.5, 0, 4, 0.05);
 	private static PIDConstants driveTurnPID = new PIDConstants(0.2, 0.005, 0.6, 1);
 	private static PIDConstants driveVelocityPID = new PIDConstants(0.0, 0, 0.0, 1.0 / 14.0, 0);
 

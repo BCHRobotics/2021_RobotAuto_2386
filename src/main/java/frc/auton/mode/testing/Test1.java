@@ -9,7 +9,7 @@ public class Test1 implements AutonMode {
 
     @Override
     public void addToMode(AutonBuilder ab) {
-        ab.addCommand(new DriveToPoint(20, 0, 0, 0, 4, 0.5, 15000));
+        ab.addCommand(new DriveToPoint(20, 0, 180, 0, 4, 0.5, 15000));
         ab.addCommand(new DriveWait());
     }
     

@@ -13,6 +13,8 @@ import frc.io.Dashboard;
 import frc.io.RobotOutput;
 import frc.io.SensorInput;
 import frc.subsystems.Drive;
+import frc.subsystems.Shooter;
+import frc.subsystems.Shooter.ShooterWheelState;
 import frc.teleop.TeleopControl;
 
 
@@ -125,5 +127,10 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     this.sensorInput.update();
     this.dashboard.updateAll();
+
+    Shooter shooter = Shooter.getInstance();
+    shooter.setWheelRpm(1000);
+    shooter.setWheelState(ShooterWheelState.VELOCITY);
+    shooter.calculate();
   }
 }

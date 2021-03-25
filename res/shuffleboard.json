@@ -383,6 +383,155 @@
               "_source0": "network_table:///SmartDashboard/DRIVE_PID-EPS",
               "_title": "DRIVE_PID-EPS"
             }
+          },
+          "8,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/limelight_PipelineName",
+              "_title": "limelight_PipelineName"
+            }
+          },
+          "9,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/limelight_Stream",
+              "_title": "limelight_Stream"
+            }
+          },
+          "10,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/limelight_Interface",
+              "_title": "limelight_Interface"
+            }
+          },
+          "11,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DriveL2",
+              "_title": "DriveL2"
+            }
+          },
+          "12,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DriveR2",
+              "_title": "DriveR2"
+            }
+          },
+          "13,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/IntakeArm",
+              "_title": "IntakeArm"
+            }
+          },
+          "14,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/balls0",
+              "_title": "balls0",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "15,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/balls1",
+              "_title": "balls1",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "16,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/balls2",
+              "_title": "balls2",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "17,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/stagerState",
+              "_title": "stagerState"
+            }
+          },
+          "18,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/stager0",
+              "_title": "stager0"
+            }
+          },
+          "19,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/DRIVE_STATE",
+              "_title": "DRIVE_STATE"
+            }
+          },
+          "20,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelVel",
+              "_title": "ShooterWheelVel"
+            }
           }
         }
       }
@@ -416,6 +565,27 @@
                   "Visuals/Starting angle": 180.0,
                   "Visuals/Show tick mark ring": true,
                   "Visuals/Counter clockwise": false
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[4]/Value",
+                  "_title": "DigitalInput[4]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[0]/Value",
+                  "_title": "DigitalInput[0]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[3]/Value",
+                  "_title": "DigitalInput[3]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
                 }
               ]
             }
@@ -433,47 +603,43 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "1,2": {
+          "1,1": {
             "size": [
               4,
               3
             ],
             "content": {
               "_type": "Graph",
-              "_source0": "network_table:///SmartDashboard/Drive-X-pos",
-              "_source1": "network_table:///SmartDashboard/SetPointX",
+              "_source0": "network_table:///SmartDashboard/SetPointX",
+              "_source1": "network_table:///SmartDashboard/Drive-X-pos",
               "_title": "SmartDashboard/Drive-X-pos",
               "Graph/Visible time": 30.0,
-              "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
               "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "x",
               "Visible data/SmartDashboard/Drive-X-pos": true,
               "Visible data/SmartDashboard/SetPointX": true
             }
           },
-          "5,2": {
+          "5,1": {
             "size": [
               4,
               3
             ],
             "content": {
               "_type": "Graph",
-              "_source0": "network_table:///SmartDashboard/Drive-Y-pos",
-              "_source1": "network_table:///SmartDashboard/SetPointY",
+              "_source0": "network_table:///SmartDashboard/SetPointY",
+              "_source1": "network_table:///SmartDashboard/Drive-Y-pos",
               "_title": "SmartDashboard/Drive-Y-pos",
               "Graph/Visible time": 30.0,
-              "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
               "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "y",
               "Visible data/SmartDashboard/Drive-Y-pos": true,
               "Visible data/SmartDashboard/SetPointY": true
             }
           },
-          "9,2": {
+          "9,1": {
             "size": [
               4,
               3
@@ -484,11 +650,9 @@
               "_source1": "network_table:///SmartDashboard/SetPointGyro",
               "_title": "SmartDashboard/Gyro",
               "Graph/Visible time": 30.0,
-              "Graph/X-axis auto scrolling": true,
               "Y-axis/Automatic bounds": true,
               "Y-axis/Upper bound": 1.0,
               "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "theta",
               "Visible data/SmartDashboard/Gyro": true,
               "Visible data/SmartDashboard/SetPointGyro": true
             }
@@ -605,12 +769,47 @@
           }
         }
       }
+    },
+    {
+      "title": "Tab 4",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "5,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterSetRpm",
+              "_title": "/SmartDashboard/ShooterSetRpm"
+            }
+          },
+          "6,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ShooterWheelVel",
+              "_title": "SmartDashboard/ShooterWheelVel"
+            }
+          }
+        }
+      }
     }
   ],
   "windowGeometry": {
-    "x": 995.0,
-    "y": 293.0,
-    "width": 1957.0,
-    "height": 1145.0
+    "x": -7.0,
+    "y": 1.0,
+    "width": 1940.0,
+    "height": 751.0
   }
 }

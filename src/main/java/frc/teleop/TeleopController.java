@@ -96,11 +96,29 @@ public class TeleopController extends TeleopComponent {
             shooter.setWheelSpeed(-operatorController.getJoystick(Side.LEFT, Axis.Y));
         } else {
             if (Constants.DASHBOARD_WHEEL_SET) {
-                shooter.setWheelState(ShooterWheelState.VELOCITY);
                 double rpm = SmartDashboard.getNumber("ShooterSetRpm", 0);
                 shooter.setWheelRpm(rpm);
+                shooter.setWheelState(ShooterWheelState.VELOCITY);
             } else {
-                shooter.setWheelSpeed(0);
+                
+                int dPad = operatorController.getDPad();
+                if (dPad != -1) {
+                    double rpm = 0; 
+                    if (dPad == 0) {
+                        rpm = SmartDashboard.getNumber("ShooterGreenZone", 3200);
+                    } else if (dPad == 90) {
+                        rpm = SmartDashboard.getNumber("ShooterYellowZone", 2800);
+                    } else if (dPad == 180) {
+                        rpm = SmartDashboard.getNumber("ShooterBlueZone", 3050);
+                    } else if (dPad == 270) {
+                        rpm = SmartDashboard.getNumber("ShooterRedZone", 3240);
+                    }
+
+                    shooter.setWheelRpm(rpm);
+                    shooter.setWheelState(ShooterWheelState.VELOCITY);
+                } else {
+                    shooter.setWheelSpeed(0);
+                } 
             }    
         }
 

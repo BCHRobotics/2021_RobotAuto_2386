@@ -3,6 +3,7 @@ package frc.io;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.RobotType;
+import frc.subsystems.Shooter;
 import frc.subsystems.Stager;
 import frc.util.PIDConstants;
 
@@ -23,6 +24,12 @@ public class Dashboard {
         SmartDashboard.putNumber("SetPointX", 0);
         SmartDashboard.putNumber("SetPointY", 0);
         SmartDashboard.putNumber("SetPointGyro", 0);
+        SmartDashboard.putNumber("ShooterSetRpm", 0);
+
+        SmartDashboard.putNumber("ShooterGreenZone", 3200);
+        SmartDashboard.putNumber("ShooterYellowZone", 2800);
+        SmartDashboard.putNumber("ShooterBlueZone", 3050);
+        SmartDashboard.putNumber("ShooterRedZone", 3240);
     }
 
     public void updateAll() {
@@ -59,6 +66,8 @@ public class Dashboard {
 
             Stager stager = Stager.getInstance();
             SmartDashboard.putString("stagerState", stager.getState().toString());
+
+            SmartDashboard.putNumber("ShooterWheelVel", sensorIn.getShooterWheelVelocity());
         }
     }
 

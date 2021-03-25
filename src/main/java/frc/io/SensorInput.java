@@ -250,4 +250,8 @@ public class SensorInput {
     public double getShooterWheelEncoder() {
         return this.shooterWheelEncoder.getPosition();
     }
+
+    public double getShooterWheelVelocity() {
+        return this.shooterWheelEncoder.getVelocity();
+    }
 }
