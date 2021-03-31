@@ -59,7 +59,7 @@ public class DriveTurnToAngle extends AutonCommand {
             double leftOut = Lib.calcLeftTankDrive(x, 0);
             double rightOut = Lib.calcLeftTankDrive(x, 0);
 
-            this.drive.setVelocityOutput(leftOut, rightOut);
+            this.drive.setVelocityOutput(leftOut, -rightOut);
             return false;
         }
     }

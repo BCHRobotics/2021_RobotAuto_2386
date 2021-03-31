@@ -532,50 +532,6 @@
               "_source0": "network_table:///SmartDashboard/ShooterWheelVel",
               "_title": "ShooterWheelVel"
             }
-          },
-          "21,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/ShooterRedZone",
-              "_title": "ShooterRedZone"
-            }
-          },
-          "22,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/ShooterGreenZone",
-              "_title": "ShooterGreenZone"
-            }
-          },
-          "23,1": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/ShooterYellowZone",
-              "_title": "ShooterYellowZone"
-            }
-          },
-          "0,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/ShooterBlueZone",
-              "_title": "ShooterBlueZone"
-            }
           }
         }
       }
