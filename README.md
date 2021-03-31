@@ -8,7 +8,7 @@ This is the main working code for the 2021 robotics season, this is created for 
 
 To run the code you must install the following items to your computer:
 
-* FRC tools: (https://www.ni.com/en-us/support/downloads/drivers/download.frc-game-tools.html)
+* FRC tools (Windows only, for driving): (https://www.ni.com/en-us/support/downloads/drivers/download.frc-game-tools.html)
 * VSCode: (https://code.visualstudio.com/)
 * WPILib Extension: (https://marketplace.visualstudio.com/items?itemName=wpilibsuite.vscode-wpilib)
 * Java Tools: (https://code.visualstudio.com/docs/languages/java)
