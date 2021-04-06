@@ -27,8 +27,20 @@ public class Constants {
     private static double miniDriveWheelDiameter = 5.78;
     private static double comp2020DriveWheelDiameter = 6;
 
+    /**
+     * PID on carpet
+     * Drive straight: 0.5, 0, 0.4, 0.05
+     * Drive turn: 0.4, 0. 0.25, 1
+     */
+
+    /**
+     * PID on masonite
+     * Drive straight: 0.5, 0, 4, 0.05
+     * Drive turn: 0.15, 0.01, 0.65, 1
+     */
+
 	private static PIDConstants driveStraightPID = new PIDConstants(0.5, 0, 4, 0.05); // Updated 2021-03-25
-	private static PIDConstants driveTurnPID = new PIDConstants(0.1, 0, 0, 1);
+	private static PIDConstants driveTurnPID = new PIDConstants(0.15, 0.01, 0.65, 1);
 	private static PIDConstants driveVelocityPID = new PIDConstants(0.0, 0, 0.0, 1.0 / 14.0, 0);
 
     private static PIDConstants turretPID = new PIDConstants(0, 0, 0, 0);

@@ -647,61 +647,7 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "1,1": {
-            "size": [
-              4,
-              3
-            ],
-            "content": {
-              "_type": "Graph",
-              "_source0": "network_table:///SmartDashboard/SetPointX",
-              "_source1": "network_table:///SmartDashboard/Drive-X-pos",
-              "_title": "SmartDashboard/Drive-X-pos",
-              "Graph/Visible time": 30.0,
-              "Y-axis/Automatic bounds": true,
-              "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/Drive-X-pos": true,
-              "Visible data/SmartDashboard/SetPointX": true
-            }
-          },
-          "5,1": {
-            "size": [
-              4,
-              3
-            ],
-            "content": {
-              "_type": "Graph",
-              "_source0": "network_table:///SmartDashboard/SetPointY",
-              "_source1": "network_table:///SmartDashboard/Drive-Y-pos",
-              "_title": "SmartDashboard/Drive-Y-pos",
-              "Graph/Visible time": 30.0,
-              "Y-axis/Automatic bounds": true,
-              "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/Drive-Y-pos": true,
-              "Visible data/SmartDashboard/SetPointY": true
-            }
-          },
-          "9,1": {
-            "size": [
-              4,
-              3
-            ],
-            "content": {
-              "_type": "Graph",
-              "_source0": "network_table:///SmartDashboard/Gyro",
-              "_source1": "network_table:///SmartDashboard/SetPointGyro",
-              "_title": "SmartDashboard/Gyro",
-              "Graph/Visible time": 30.0,
-              "Y-axis/Automatic bounds": true,
-              "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Visible data/SmartDashboard/Gyro": true,
-              "Visible data/SmartDashboard/SetPointGyro": true
-            }
-          },
-          "1,0": {
+          "0,0": {
             "size": [
               1,
               1
@@ -712,7 +658,7 @@
               "_title": "SmartDashboard/DRIVE_PID-P"
             }
           },
-          "2,0": {
+          "1,0": {
             "size": [
               1,
               1
@@ -723,7 +669,7 @@
               "_title": "SmartDashboard/DRIVE_PID-I"
             }
           },
-          "3,0": {
+          "2,0": {
             "size": [
               1,
               1
@@ -734,29 +680,7 @@
               "_title": "SmartDashboard/DRIVE_PID-D"
             }
           },
-          "4,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DRIVE_PID-EPS",
-              "_title": "SmartDashboard/DRIVE_PID-EPS"
-            }
-          },
           "5,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/DRIVE_PID-FF",
-              "_title": "SmartDashboard/DRIVE_PID-FF"
-            }
-          },
-          "8,0": {
             "size": [
               1,
               1
@@ -767,7 +691,7 @@
               "_title": "SmartDashboard/TURN_PID-P"
             }
           },
-          "9,0": {
+          "6,0": {
             "size": [
               1,
               1
@@ -778,7 +702,7 @@
               "_title": "SmartDashboard/TURN_PID-I"
             }
           },
-          "10,0": {
+          "7,0": {
             "size": [
               1,
               1
@@ -789,26 +713,48 @@
               "_title": "SmartDashboard/TURN_PID-D"
             }
           },
-          "11,0": {
+          "4,2": {
             "size": [
               1,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/TURN_PID-EPS",
-              "_title": "SmartDashboard/TURN_PID-EPS"
+              "_source0": "network_table:///SmartDashboard/Gyro",
+              "_title": "SmartDashboard/Gyro"
             }
           },
-          "12,0": {
+          "2,2": {
             "size": [
               1,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/TURN_PID-FF",
-              "_title": "SmartDashboard/TURN_PID-FF"
+              "_source0": "network_table:///SmartDashboard/12_Auton Step 1: ",
+              "_title": "SmartDashboard/12_Auton Step 1: "
+            }
+          },
+          "5,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Drive-X-pos",
+              "_title": "SmartDashboard/Drive-X-pos"
+            }
+          },
+          "6,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Drive-Y-pos",
+              "_title": "SmartDashboard/Drive-Y-pos"
             }
           }
         }
@@ -851,9 +797,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.0,
-    "y": 1.0,
-    "width": 1940.0,
-    "height": 751.0
+    "x": 1905.0,
+    "y": 0.0,
+    "width": 1320.0,
+    "height": 706.0
   }
 }
